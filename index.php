@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include 'comands.php';
+	//include 'comands.php';
 	include 'uploader.php';
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
 		<a href="logout.php">Выйти</a>
 		<br />
 		<!-- Open modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_admin_modal">Activate modal</button>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_admin_modal">Добавить пользователя</button>
 
 		<div class="modal fade" id="add_admin_modal">
 			<div class="modal-dialog">
@@ -52,7 +52,7 @@
 					    	</div>
 						    <div class="form-group">
 						      	<div class="col-lg-10 col-lg-offset-2">
-						      		<input type="submit" name="add_admin1" value="Добавить" class="btn btn-primary">
+						      		<input type="submit" name="add_admin" value="Добавить" class="btn btn-primary">
 						      	</div>   
 						    </div>						    
 						</form>
@@ -60,48 +60,13 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="admin_create">
-			<form method="post">
-			<?php 
-				if (isset($error)) {
-					echo $error;
-				}
-			?>
-			<br />
-				<label>Login - </label>
-				<input type="text" name="admin_name" id="admin_name" required="true" maxlength="16"> <br />
-				<label>Password - </label>
-				<input type="password" name="admin_password" id="admin_password" required="true" minlength="5"> <br />
-				<input type="submit" name="add_admin" value="Add admin" class="btn btn-primary">
-			<?php
-				if (isset($message)) {
-					echo $message;
-				}
-			?>
-			</form>
-		</div> -->
 	<?php endif; ?>
-
-	<h1>Add partner</h1>
-	<form method="post" enctype="multipart/form-data">
-		<label>Enter company name</label>
-		<input type="text" maxlength="32" name="company_name" id="company_name" required="true"></input> <br />
-		<label>Enter text about company</label>
-		<textarea name="company_about" id="company_about" required="true"></textarea> <br />
-		<label>Upload company img. Only 400x400!</label>
-		<input type="file" name="upload_image" id="upload_image" required="true"></input> <br />
-		<input type="submit" name="upload" value="Upload"></input>
-
-		<?php
-			if (isset($success)) {
-				echo $success;
-			} 
-			if (isset($error_file)) {
-				echo $error_file;
-				$error_file = null;
-			}
-		?>
-	</form>
+	<br />
+		<input type="submit" name="add_block_partner" id="add_block_partner" value="Добавить элемент">
+		<!-- BEGIN of block -->
+		<div class="new_partners_block"></div>
+		<input type="text" id="counter" style="display: none;">
+		<!-- END of block -->
 
 	<h1>Admin List</h1>	
 	<div id="adminList"></div>
