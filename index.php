@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	//include 'comands.php';
 	include 'uploader.php';
 ?>
 <!DOCTYPE html>
