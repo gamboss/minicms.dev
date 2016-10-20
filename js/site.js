@@ -5,9 +5,6 @@ $.getJSON( "json/admin_list.json", function( data ) {
 	$('#data').tmpl(data).appendTo('#adminList')
 	for (var i = 0; i < data.length; i++) {
 		getData = data[i].admin_name;
-		/*if (test == 'admin') {
-			alert('qwe');
-		}*/
 	}
 		
 })
@@ -52,6 +49,7 @@ $(".form-auth").submit(function(e) {
             'data': data_request,
             success: function(res) {
                 var r = JSON.parse(res);
+                console.log(r);
                 if (r.auth_error == null) {
                     window.location.href = "http://minicms.dev:1025/index.php";
                 }
@@ -73,10 +71,10 @@ $("#add_block_partner").click(function(e) {
     $('#counter').val(function(i, val) { return +val+1 });
     var count = $("#counter").val();
 
-    $(".new_partners_block").append('<!— BEGIN of item —>');
+    $(".form_add_partner").append('<!— BEGIN of item —>');
 
     //form creator
-    var a = '<form method="post" enctype="multipart/form-data" class="form_add_partner" id="block' + count +'">';
+    var a = '<div class="item_add_partner" id="block' + count +'">';
         var b = '<h3>Партнер' + ' ' + count + '</h3>';
 
         var c = '<div class="clear_fix">';
@@ -91,22 +89,50 @@ $("#add_block_partner").click(function(e) {
 
         var k = '<div class="clear_fix">';
             var l = '<label for="upload_image">Загрузите логотип компании</label>';
-            var m = '<input type="file" name="upload_image" id="upload_image" required="true">';
+            var m = '<input type="file" name="upload_image" class="images" id="upload_image" required="true">';
         var n = '</div>';
 
         var o = '<div id="msg"></div>';
 
-        var p = '<div class="clear_fix">';
+        /*var p = '<div class="clear_fix">';
             var q = '<input type="submit" name="upload" value="Загрузить">';
-        var r = '</div>';
-    var s = '</form>';
+        var r = '</div>';*/
+    var p = '</div>';
 
-    $(".new_partners_block").append(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r + s);
-    $(".new_partners_block").append('<input type="submit" name="delete_block" id="delete_block' + count +'" value="Удалить">');
-    $(".new_partners_block").append('<!— END of item —>');
+    $(".form_add_partner").append(a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p);
+    $(".form_add_partner").append('<input type="submit" name="delete_block" id="delete_block' + count +'" value="Удалить">');
+    $(".form_add_partner").append('<!— END of item —>');
 
-    $('.new_partners_block').on('click', "#delete_block" + count, function() {
+    $('.form_add_partner').on('click', "#delete_block" + count, function() {
         $('#block' + count).remove();
         $('#delete_block' + count).remove();
     }); 
+});
+
+//add partner button
+$("#publish").click(function(e) {
+
+    var dataString = $(".form_add_partner").serialize();
+    console.log(dataString);
+
+    $.ajax({
+            type: 'POST',
+            url: '/test.php',
+            'data': new FormData(this),
+            contentType: false,
+            processData: false,
+            success: function(res) {
+                var r = JSON.parse(res);
+                if (r.auth_error == null) {
+                    window.location.href = "http://minicms.dev:1025/index.php";
+                }
+                else {
+                    $('#msg').html(r.auth_error);
+                }
+            },
+            error:function(res) {
+                  alert("Произошел сбой!");
+            }
+    });
+    e.preventDefault();
 });
